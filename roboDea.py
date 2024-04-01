@@ -128,7 +128,7 @@ query_selecionar_processos = """
 SELECT NU_ORDEM, DT_PRODUCAO, NU_CGC_CPF , VL_PAGAMENTO FROM TB_PAGAMENTO_SERVICO tps
 WHERE 
 	NU_ORDEM IN(
-        2302026521
+		2306184890
     )
 """
 
@@ -475,7 +475,7 @@ def obter_dados(processo_falhado):
     return processo, data_processo, valor_dea, cnpj_cpf, nome_cidade, tipo_tratamento, codigo_dea
 
 # Função para pegar o código DEA
-def pega_codigo_dea():
+def capturar_codigo_dea():
     try:
         # capturar o código DEA
         elemento_codigo_dea = navegador.find_element(by=By.XPATH, value='//*[@id="pagTemplate:tblEntidadeDec:tabViewerDec::db"]/table/tbody/tr[1]/td[1]/span')
@@ -495,7 +495,7 @@ if resultados:
             # Inserir novo DEA
             if inserir_dea(processo, data_processo, data_atual, cnpj_cpf, valor_processo):
                 # Se a inserção for bem-sucedida, então atualizar TT_SPU
-                codigo_dea = pega_codigo_dea()
+                codigo_dea = capturar_codigo_dea()
                 atualizar_tt_spu(processo, codigo_dea)
                 print(f'Processo {processo} processado com sucesso. Codigo DEA: {codigo_dea}')
         except Exception as e:

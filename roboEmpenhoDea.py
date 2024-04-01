@@ -73,7 +73,7 @@ def configuracao_de_ambiente(ambiente):
 
 # Setar ambiente
 
-ambiente_escolhido = configuracao_de_ambiente("homologacao")
+ambiente_escolhido = configuracao_de_ambiente("producao")
 
 print(f"Dados do arquivo .env: {env_path}: ")
 print(f'dns: {ambiente_escolhido["db_dsn"]}')
@@ -191,19 +191,12 @@ def conexao_bd_oracle(ambiente_escolhido, query, params=None, is_update=False):
     except cx_Oracle.DatabaseError as e:
         logging.error("Erro Oracle: %s", e)
         rows = None
-        raise e
     finally:
         if cursor:
             cursor.close()
         if connection:
             connection.close()
     return rows if not is_update else rows is not None
-
-def fechar_conexao(cursor, connection):
-    if cursor:
-        cursor.close()
-    if connection:
-        connection.close()
 
 # QUERY PARA SELECIONAR OS DEAS REALIZADOS
 
@@ -341,15 +334,19 @@ def obter_codigo_nr(pa, macroregiao):
     return None
 
 def verificar_processo_realizado(numero_processo):
-    query_verificar = """
-    SELECT W_QTD1
-    FROM TT_SPU
-    WHERE W_NUM_PROTOCOLO = :numero_processo
-    """
-    resultado = conexao_bd_oracle(ambiente_escolhido, query_verificar, params={"numero_processo": numero_processo})
-    if resultado is not None and resultado[0][0] == 1:
-        return True
-    else:
+    try:
+        query_verificar = """
+        SELECT W_QTD1
+        FROM TT_SPU
+        WHERE W_NUM_PROTOCOLO = :numero_processo
+        """
+        resultado = conexao_bd_oracle(ambiente_escolhido, query_verificar, params={"numero_processo": numero_processo})
+        if resultado is not None and resultado[0][0] == 1:
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(f"Ocorreu um erro ao verificar o processo: {e}")
         return False
 
 def atualizar_tt_spu(numero_processo):
@@ -448,9 +445,9 @@ def selecionar_menu_empenho():
             tempo_espera(1)
             # btn Nota de Empenho
             #produção
-            # navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:4:pt_cni3"]').click()
-            # honmologação
-            navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:2:pt_cni3"]').click()
+            navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:4:pt_cni3"]').click()
+            # homologação
+            # navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:2:pt_cni3"]').click()
             tempo_espera(2)
             sucesso = True
             return
@@ -665,14 +662,11 @@ def aba_observacao(tipo_tratamento, data_producao, nome_cidade):
             logging.error(traceback.format_exc())  # imprime a exceção completa
             return
 
-def contabilizar_empenho_dea(ambiente_escolhido):
+def salvar_rascunho_empenho_dea(ambiente_escolhido):
     try:
-        # Click no botão Contabilizar
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:btnContabilizar"]/a/span').click()
+        # Click no botão Salvar Rascunho
+        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:btnConfirmar"]/span').click()
         tempo_espera(2)
-        # Click no botão Sim PARA confirmar a contabilização
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:popContabilizarconfirmButton"]/span').click()
-        tempo_espera(3)
         # Voltar a página de consulta de empenhos
         navegador.get(ambiente_escolhido['url_pagina_consulta_empenho'])
         tempo_espera(1)
@@ -702,13 +696,13 @@ def inserir_empenho_dea(numero_processo, data_producao, valor_dea, cnpj_cpf, nom
         tempo_espera(2)
         aba_observacao(tipo_tratamento, data_producao, nome_cidade)
         tempo_espera(2)
-        contabilizar_empenho_dea(ambiente_escolhido)
+        salvar_rascunho_empenho_dea(ambiente_escolhido)
         tempo_espera(2)
-        return
+        return True
     except Exception as e:
         logging.error(f'Erro ao tentar inserir o Empenho para o processo {numero_processo}: {e}')
         logging.error(traceback.format_exc())
-        return
+        return False
 
 tela_login(ambiente_escolhido)
 tempo_espera(2)
@@ -751,7 +745,6 @@ def obter_dados(processo_falhado):
     codigo_dea = processo_falhado.codigo_dea
 
     return numero_processo, data_producao, valor_dea, cnpj_cpf, nome_cidade, tipo_tratamento, codigo_dea
-
 
 def armazenar_processos_falhados(processos_falhados):
     with open('processos_falhados.json', 'w') as f:
