@@ -69,7 +69,7 @@ def configuracao_de_ambiente(ambiente):
 
 # Setar ambiente
 
-ambiente_escolhido = configuracao_de_ambiente("homologacao")
+ambiente_escolhido = configuracao_de_ambiente("producao")
 
 print(f"Dados do arquivo .env: {env_path}: ")
 print(f'dns: {ambiente_escolhido["db_dsn"]}')
@@ -128,7 +128,8 @@ query_selecionar_processos = """
 SELECT NU_ORDEM, DT_PRODUCAO, NU_CGC_CPF , VL_PAGAMENTO FROM TB_PAGAMENTO_SERVICO tps
 WHERE 
 	NU_ORDEM IN(
-		2306184890
+        2306224654,
+        2306401416
     )
 """
 

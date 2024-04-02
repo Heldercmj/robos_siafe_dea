@@ -267,7 +267,7 @@ SELECT
     W_TIPOINT2
 FROM t3
 WHERE nu_ordem > 0 
-ORDER BY W_TIPOINT2 DESC
+ORDER BY W_TIPOINT2
 """
 
 # Formatação de dados do BD para serem usados no SIAFE
@@ -411,43 +411,51 @@ def validar_campo_preenchido(xpath):
 
 def tela_login(ambiente_escolhido):
     try:
-        # Campo login
         tempo_espera(2)
-        navegador.find_element(by=By.XPATH, value='//*[@id="loginBox:itxUsuario::content"]').send_keys(ambiente_escolhido['usuario_siafe'])
+        # Campo login
+        campo_login = navegador.find_element(By.XPATH, '//*[@id="loginBox:itxUsuario::content"]')
+        campo_login.send_keys(ambiente_escolhido['usuario_siafe'])
         tempo_espera(1)
-        navegador.find_element(by=By.XPATH, value='//*[@id="loginBox:itxSenhaAtual::content"]').send_keys(ambiente_escolhido['senha_siafe'])
+        # Campo senha
+        campo_senha = navegador.find_element(By.XPATH, '//*[@id="loginBox:itxSenhaAtual::content"]')
+        campo_senha.send_keys(ambiente_escolhido['senha_siafe'])
         tempo_espera(1)
-        # exercicio = navegador.find_element(by=By.XPATH, value='//*[@id="loginBox:cbxExercicio::content"]')
-        navegador.find_element(by=By.XPATH, value='//*[@id="loginBox:btnConfirmar"]/span').click()
+        # Botão confirmar
+        botao_confirmar = navegador.find_element(By.XPATH, '//*[@id="loginBox:btnConfirmar"]/span')
+        botao_confirmar.click()
         tempo_espera(2)
         # Acessar a página direto para livrar as mensagens que sempre mudam no Siafe
         navegador.get(ambiente_escolhido['url_pagina_inicial'])
-        return
+        return True
     except Exception as e:
         logging.error(f'Erro ao tentar logar no sistema: {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
 
 def selecionar_menu_empenho():
     sucesso = False
     for tentativa in range (3): # Tenta até 3 vezes
         try:
+            tempo_espera(1)
             #selecionar UG Fassec
-            select_ug = navegador.find_element(by=By.XPATH, value='//*[@id="pt1:selUg::content"]')
+            select_ug = navegador.find_element(By.XPATH, '//*[@id="pt1:selUg::content"]')
             opcao_ug = Select(select_ug)
             opcao_ug.select_by_value('2')  
             tempo_espera(1)
             #btn execução
-            navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np4:1:pt_cni6::disclosureAnchor"]').click()
+            botao_execucao = navegador.find_element(By.XPATH, '//*[@id="pt1:pt_np4:1:pt_cni6::disclosureAnchor"]')
+            botao_execucao.click()
             tempo_espera(1)
             #btn Execução Orçamentária
-            navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np3:0:pt_cni4::disclosureAnchor"]').click()
+            botao_execucao_orcamentaria = navegador.find_element(By.XPATH, '//*[@id="pt1:pt_np3:0:pt_cni4::disclosureAnchor"]')
+            botao_execucao_orcamentaria.click()
             tempo_espera(1)
             # btn Nota de Empenho
-            #produção
-            navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:4:pt_cni3"]').click()
-            # homologação
-            # navegador.find_element(by=By.XPATH, value='//*[@id="pt1:pt_np2:2:pt_cni3"]').click()
+            # homologacao
+            # botao_nota_empenho = navegador.find_element(By.XPATH, '//*[@id="pt1:pt_np2:2:pt_cni3"]')
+            # produção
+            botao_nota_empenho = navegador.find_element(By.XPATH, '//*[@id="pt1:pt_np2:4:pt_cni3"]')
+            botao_nota_empenho.click()
             tempo_espera(2)
             sucesso = True
             return
@@ -465,115 +473,126 @@ def selecionar_empenho_dea(cnpj_cpf):
     try:
         tempo_espera(2)
         # btn Inserir Empenho
-        navegador.find_element(by=By.XPATH, value='//*[@id="pt1:tblDocumento:btnInsert"]/a/span').click()
+        botao_inserir_empenho = navegador.find_element(By.XPATH, '//*[@id="pt1:tblDocumento:btnInsert"]/a/span')
+        botao_inserir_empenho.click()
         tempo_espera(2)
         # campo CNPJ
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovPJ:itxLovDec::content"]').send_keys(cnpj_cpf)
+        campo_cnpj = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovPJ:itxLovDec::content"]')
+        campo_cnpj.send_keys(cnpj_cpf)
         print(f'CNPJ: {cnpj_cpf}')
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovPJ:itxLovDec::content"]').send_keys(Keys.TAB)
+        campo_cnpj.send_keys(Keys.TAB)
         tempo_espera(2)
-        return
+        return True
     except Exception as e:
         logging.error(f'Falha ao tentar executar a função selecionar_empenho_dea {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
         
 def aba_classificacao(codigo_nr):
-        try:
-            tempo_espera(2)
-            # Click na aba Classificação
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcClassificacao::disAcr"]').click()
-            tempo_espera(1)
-            # Select Tipo Reconhecimento de Passivo
-            select_tipo_reconhecimento_de_passivo = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcTipoRecPassivo::content"]')
-            opcao_tipo_reconhecimento_de_passivo = Select(select_tipo_reconhecimento_de_passivo)
-            opcao_tipo_reconhecimento_de_passivo.select_by_value('1')
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcTipoRecPassivo::content"]').send_keys(Keys.TAB)
-            tempo_espera(2)
-            # Campo NR
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovNotaReserva:itxLovDec::content"]').send_keys(codigo_nr)
-            tempo_espera(1)
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovNotaReserva:itxLovDec::content"]').send_keys(Keys.TAB)
-            tempo_espera(2)
-            # Select Efeito do Documento
-            select_efeito_do_documento = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:pnlClassificacao_chc_595::content"]')
-            opcao_efeito_do_documento = Select(select_efeito_do_documento)
-            opcao_efeito_do_documento.select_by_value('0')
-            tempo_espera(1)
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:pnlClassificacao_chc_595::content"]').send_keys(Keys.TAB)
-            tempo_espera(2)
-            return
-        except Exception as e:
-            logging.error(f'Falha ao tentar executar a função aba_classificacao {e}')
-            logging.error(traceback.format_exc())  # imprime a exceção completa
-            return
+    try:
+        tempo_espera(2)
+        # Click na aba Classificação
+        botao_aba_classificacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcClassificacao::disAcr"]')
+        botao_aba_classificacao.click()
+        tempo_espera(1)
+        # Select Tipo Reconhecimento de Passivo
+        select_tipo_reconhecimento_de_passivo = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcTipoRecPassivo::content"]')
+        opcao_tipo_reconhecimento_de_passivo = Select(select_tipo_reconhecimento_de_passivo)
+        opcao_tipo_reconhecimento_de_passivo.select_by_value('1')
+        select_tipo_reconhecimento_de_passivo.send_keys(Keys.TAB)
+        tempo_espera(2)
+        # Campo NR
+        campo_nr = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovNotaReserva:itxLovDec::content"]')
+        campo_nr.send_keys(codigo_nr)
+        tempo_espera(1)
+        campo_nr.send_keys(Keys.TAB)
+        tempo_espera(2)
+        # Select Efeito do Documento
+        select_efeito_do_documento = navegador.find_element(By.XPATH, '//*[@id="tplSip:pnlClassificacao_chc_595::content"]')
+        opcao_efeito_do_documento = Select(select_efeito_do_documento)
+        opcao_efeito_do_documento.select_by_value('0')
+        select_efeito_do_documento.send_keys(Keys.TAB)
+        tempo_espera(1)
+        return True
+    except Exception as e:
+        logging.error(f'Falha ao tentar executar a função aba_classificacao {e}')
+        logging.error(traceback.format_exc())  # imprime a exceção completa
+        return False
         
 def aba_detalhamento(nome_cidade):
     try:
         tempo_espera(2)
         # Click na aba Detalhamento
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcDetalhamento::disAcr"]').click()
+        botao_aba_detalhamento = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcDetalhamento::disAcr"]')
+        botao_aba_detalhamento.click()
         tempo_espera(1)
         # Escolher Modalidade do Empenho
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:radTipoModalidadeEmpenho:_1"]').click()
+        botao_modalidade_empenho = navegador.find_element(By.XPATH, '//*[@id="tplSip:radTipoModalidadeEmpenho:_1"]')
+        botao_modalidade_empenho.click()
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:radTipoModalidadeEmpenho:_1"]').send_keys(Keys.TAB)
+        botao_modalidade_empenho.send_keys(Keys.TAB)
         tempo_espera(1)
         # Select Modalidade de Licitação
-        select_modalidade_licitacao = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxTipoLicitacao::content"]')
+        select_modalidade_licitacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:cbxTipoLicitacao::content"]')
         opcao_modalidade_licitacao = Select(select_modalidade_licitacao)
         opcao_modalidade_licitacao.select_by_value('5')
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxTipoLicitacao::content"]').send_keys(Keys.TAB)
+        select_modalidade_licitacao.send_keys(Keys.TAB)
         tempo_espera(1)
         # Select Lei
-        select_lei = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxEmbasamentoLegal::content"]')
+        select_lei = navegador.find_element(By.XPATH, '//*[@id="tplSip:cbxEmbasamentoLegal::content"]')
         opcao_lei = Select(select_lei)
         opcao_lei.select_by_value('0')
         tempo_espera(1)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxEmbasamentoLegal::content"]').send_keys(Keys.TAB)
+        select_lei.send_keys(Keys.TAB)
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxEmbasamentoLegal::content"]').send_keys(Keys.TAB)
+        select_lei.send_keys(Keys.TAB)
         tempo_espera(0.5)
         # Select Origem de Material
-        select_origem_material = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxOrigemMaterial::content"]')
+        select_origem_material = navegador.find_element(By.XPATH, '//*[@id="tplSip:cbxOrigemMaterial::content"]')
         opcao_origem_material = Select(select_origem_material)
         opcao_origem_material.select_by_value('0')
         tempo_espera(1)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:cbxOrigemMaterial::content"]').send_keys(Keys.TAB)
+        select_origem_material.send_keys(Keys.TAB)
         tempo_espera(1)
         # Campo UF
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovUf:itxLovDec::content"]').send_keys('CE')
+        campo_uf = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovUf:itxLovDec::content"]')
+        campo_uf.send_keys('CE')
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovUf:itxLovDec::content"]').send_keys(Keys.TAB)
+        campo_uf.send_keys(Keys.TAB)
         tempo_espera(0.5)
         # Campo Municipio
         print(f'Nome da cidade: {nome_cidade}')
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovMunicipio:itxLovDec::content"]').send_keys(nome_cidade)
+        campo_municipio = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovMunicipio:itxLovDec::content"]')
+        campo_municipio.send_keys(nome_cidade)
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:lovMunicipio:itxLovDec::content"]').send_keys(Keys.TAB)
+        campo_municipio.send_keys(Keys.TAB)
         tempo_espera(3)
-        return
+        return True
     except Exception as e:
         logging.error(f'Falha ao tentar executar a função aba_detalhamento {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
         
 def aba_itens(codigo_dea, valor_dea):
     try:
-        # clique no menu Itens
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:sdiItens::disAcr"]').click()
+        tempo_espera(2)
+        # Click no menu Itens
+        botao_menu_itens = navegador.find_element(By.XPATH, '//*[@id="tplSip:sdiItens::disAcr"]')
+        botao_menu_itens.click()
         tempo_espera(2)
         # Click no conteúdo Sub-item da Despesa
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:tabViewerDec::db"]/table/tbody/tr/td[2]').click()
+        conteudo_sub_item_despesa = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelItens:tabItens:tabViewerDec::db"]/table/tbody/tr/td[2]')
+        conteudo_sub_item_despesa.click()
         tempo_espera(2)
         # Click no botão alterar
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:btnEdit"]/a/span').click()
+        botao_alterar = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelItens:tabItens:btnEdit"]/a/span')
+        botao_alterar.click()
         tempo_espera(3)
         print(f'Código DEA: {codigo_dea}')
         # Click no select DEA e selecione o código DEA
-        select_dea = navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:pnlClassificacaoItem_chc_216::content"]')
+        select_dea = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelItens:tabItens:pnlClassificacaoItem_chc_216::content"]')
         # Espera até que o elemento select esteja visível
         select_dea = WebDriverWait(navegador, 10).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="tplSip:painelItens:tabItens:pnlClassificacaoItem_chc_216::content"]')))
         opcao_dea = Select(select_dea)
@@ -581,122 +600,147 @@ def aba_itens(codigo_dea, valor_dea):
         tempo_espera(2)
         # Campo Valor do Item e insira o valor do DEA
         print(f'Valor DEA: {valor_dea}')
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:itxValorItem::content"]').send_keys(Keys.CONTROL + 'a')
+        campo_valor_item = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelItens:tabItens:itxValorItem::content"]')
+        campo_valor_item.send_keys(Keys.CONTROL + 'a')
         tempo_espera(2)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:itxValorItem::content"]').send_keys(valor_dea)
+        campo_valor_item.send_keys(valor_dea)
         tempo_espera(1)
         # Click no botão Confirmar
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelItens:tabItens:pnlItemWindow::yes"]').click()
+        botao_confirmar = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelItens:tabItens:pnlItemWindow::yes"]')
+        botao_confirmar.click()
         tempo_espera(3)
-        return
+        return True
     except Exception as e:
         logging.error(f'Falha ao tentar executar a função aba_itens {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
         
 def aba_produtos(data_producao, tipo_tratamento, nome_cidade, valor_dea):
     try:
+        tempo_espera(1)
         # Click na aba Produtos
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcProdutos::disAcr"]').click()
+        botao_aba_produtos = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcProdutos::disAcr"]')
+        botao_aba_produtos.click()
         tempo_espera(1)
         # Click no botão inserir
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:tblProdutosEmpenho:btnInsert"]/a/span').click()
+        botao_inserir = navegador.find_element(By.XPATH, '//*[@id="tplSip:tblProdutosEmpenho:btnInsert"]/a/span')
+        botao_inserir.click()
         tempo_espera(1)
         # Campo Produto
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxNomeProdutoGenerico::content"]').send_keys(tipo_tratamento)
-        # Campo Descrição
-        print(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
+        campo_produto = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxNomeProdutoGenerico::content"]')
+        campo_produto.send_keys(tipo_tratamento)
         tempo_espera(1)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxDescricaoProdutoGenerico::content"]').send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
+        # Campo Descrição
+        campo_descricao = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxDescricaoProdutoGenerico::content"]')
+        campo_descricao.send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
         tempo_espera(1)
         #Campo Unidade de Fornecimento
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxUnidadeFornecimentoProdutoGenerico::content"]').send_keys('UND')
+        campo_unidade_fornecimento = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxUnidadeFornecimentoProdutoGenerico::content"]')
+        campo_unidade_fornecimento.send_keys('UND')
         tempo_espera(0.5)
         # Campo Quantidade
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxQtdPrev::content"]').send_keys('1')
+        campo_quantidade = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxQtdPrev::content"]')
+        campo_quantidade.send_keys('1')
         tempo_espera(0.5)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxQtdPrev::content"]').send_keys(Keys.TAB)
+        campo_quantidade.send_keys(Keys.TAB)
         tempo_espera(1)
         # Campo Preço Unitário
-        print(f'Valor DEA: {valor_dea}')
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:itxPrecoUnitario::content"]').send_keys(valor_dea)
+        campo_preco_unitario = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxPrecoUnitario::content"]')
+        campo_preco_unitario.send_keys(valor_dea)
         tempo_espera(0.5)
         # Click no botão Confirmar
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:btnConfirmar"]/span').click()
+        botao_confirmar = navegador.find_element(By.XPATH, '//*[@id="tplSip:btnConfirmar"]/span')
+        botao_confirmar.click()
         tempo_espera(2)
-        return
+        return True
     except Exception as e:
         logging.error(f'Falha ao tentar executar a função aba_produtos {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
     
 def aba_processo(numero_processo):
     try:
+        tempo_espera(1)
         # Click na aba Processo
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcProcesso::disAcr"]').click()
+        botao_aba_processo = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcProcesso::disAcr"]')
+        botao_aba_processo.click()
         tempo_espera(1)
         # Campo Número do Processo
         print(f'Número do processo: {numero_processo}')
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelProcesso:itxProcesso::content"]').send_keys(Keys.CONTROL + 'a')
+        campo_numero_processo = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelProcesso:itxProcesso::content"]')
+        campo_numero_processo.send_keys(Keys.CONTROL + 'a')
         tempo_espera(1)
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelProcesso:itxProcesso::content"]').send_keys(numero_processo)
+        campo_numero_processo.send_keys(numero_processo)
         tempo_espera(2)
-        return
+        return True
     except Exception as e:
         logging.error(f'Falha ao tentar executar a função aba_processo {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
 
 def aba_observacao(tipo_tratamento, data_producao, nome_cidade):
-        try:
-            # Click na aba Observação
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:slcObservacao::disAcr"]').click()
-            tempo_espera(1)
-            # Campo Observação
-            print(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
-            navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:painelObservacao:itxObservacao::content"]').send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
-            tempo_espera(2)
-            return
-        except Exception as e:
-            logging.error(f'Falha ao tentar executar a função aba_observacao {e}')
-            logging.error(traceback.format_exc())  # imprime a exceção completa
-            return
+    try:
+        tempo_espera(1)
+        # Click na aba Observação
+        botao_aba_observacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcObservacao::disAcr"]')
+        botao_aba_observacao.click()
+        tempo_espera(2)
+        # Campo Observação
+        print(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
+        campo_observacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelObservacao:itxObservacao::content"]')
+        campo_observacao.send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A {data_producao} - {nome_cidade}/CE')
+        tempo_espera(2)
+        return True
+    except Exception as e:
+        logging.error(f'Falha ao tentar executar a função aba_observacao {e}')
+        logging.error(traceback.format_exc())  # imprime a exceção completa
+        return False
 
 def salvar_rascunho_empenho_dea(ambiente_escolhido):
     try:
+        tempo_espera(1)
         # Click no botão Salvar Rascunho
-        navegador.find_element(by=By.XPATH, value='//*[@id="tplSip:btnConfirmar"]/span').click()
+        botao_salvar_rascunho = navegador.find_element(By.XPATH, '//*[@id="tplSip:btnConfirmar"]/span')
+        botao_salvar_rascunho.click()
         tempo_espera(2)
         # Voltar a página de consulta de empenhos
         navegador.get(ambiente_escolhido['url_pagina_consulta_empenho'])
         tempo_espera(1)
-        return
+        return True
     except Exception as e:
         logging.error(f'Erro ao tentar contabilizar o empenho: {e}')
         logging.error(traceback.format_exc())  # imprime a exceção completa
-        return
+        return False
 
-# ###################
-# ## Módulo Principal
-# ###################
+# #######################
+# ## Módulo Processamento
+# #######################
 
 def inserir_empenho_dea(numero_processo, data_producao, valor_dea, cnpj_cpf, nome_cidade, tipo_tratamento, codigo_dea, codigo_nr):
     try:
-        selecionar_empenho_dea(cnpj_cpf)
+        if not selecionar_empenho_dea(cnpj_cpf):
+            return False
         tempo_espera(2)
-        aba_classificacao(codigo_nr)
+        if not aba_classificacao(codigo_nr):
+            return False
         tempo_espera(2)
-        aba_detalhamento(nome_cidade)
+        if not aba_detalhamento(nome_cidade):
+            return False
         tempo_espera(2)
-        aba_itens(codigo_dea, valor_dea)
+        if not aba_itens(codigo_dea, valor_dea):
+            return False
         tempo_espera(2)
-        aba_produtos(data_producao, tipo_tratamento, nome_cidade, valor_dea)
+        if not aba_produtos(data_producao, tipo_tratamento, nome_cidade, valor_dea):
+            return False
         tempo_espera(2)
-        aba_processo(numero_processo)
+        if not aba_processo(numero_processo):
+            return False
         tempo_espera(2)
-        aba_observacao(tipo_tratamento, data_producao, nome_cidade)
+        if not aba_observacao(tipo_tratamento, data_producao, nome_cidade):
+            return False
         tempo_espera(2)
-        salvar_rascunho_empenho_dea(ambiente_escolhido)
+        if not salvar_rascunho_empenho_dea(ambiente_escolhido):
+            return False
         tempo_espera(2)
         return True
     except Exception as e:
@@ -726,9 +770,9 @@ def processar_e_atualizar_empenho(processos_falhados):
             except Exception as e:
                 logging.error(f'Erro ao reprocessar o Empenho para o processo {processo_falhado}: {e}')
                 tentativas += 1
-        if tentativas == 2:
+        if tentativas == 2 and processo_falhado not in processos_falhados_novos:
             processos_falhados_novos.append(processo_falhado)
-            logging.error(f'Processo {processo_falhado} falhou após 2 tentativas')
+            logging.error(f'Processo {processo_falhado} falhou após 3 tentativas')
     # Adiciona os processos que falharam de volta à lista original
     processos_falhados.extend(processos_falhados_novos)
     logging.error(f'Relacao de processos falhados: {processos_falhados}')
