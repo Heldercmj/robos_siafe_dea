@@ -140,18 +140,60 @@ print(f'senha: {ambiente_escolhido["db_password"]}')
 
 
 ## Dados das NRs válidas 2022
+# dados_nr = [
+#     {"id": 118961, "codigo": "2024NR000027", "PA": 21023, "MACROR": 3},
+#     {"id": 118962, "codigo": "2024NR000028", "PA": 21023, "MACROR": 8},
+#     {"id": 118963, "codigo": "2024NR000029", "PA": 21023, "MACROR": 7},
+#     {"id": 118964, "codigo": "2024NR000030", "PA": 21023, "MACROR": 10},
+#     {"id": 118965, "codigo": "2024NR000031", "PA": 21023, "MACROR": 14},
+#     {"id": 118966, "codigo": "2024NR000032", "PA": 21023, "MACROR": 9},
+#     {"id": 118968, "codigo": "2024NR000033", "PA": 21069, "MACROR": 13},
+#     {"id": 118969, "codigo": "2024NR000034", "PA": 21069, "MACROR": 3},
+#     {"id": 133945, "codigo": "2024NR000036", "PA": 20848, "MACROR": 3},
+#     {"id": 133946, "codigo": "2024NR000037", "PA": 20848, "MACROR": 2},
+# ]
+
+## Dados das NRs Válidas 2023
 dados_nr = [
-    {"id": 118961, "codigo": "2024NR000027", "PA": 21023, "MACROR": 3},
-    {"id": 118962, "codigo": "2024NR000028", "PA": 21023, "MACROR": 8},
-    {"id": 118963, "codigo": "2024NR000029", "PA": 21023, "MACROR": 7},
-    {"id": 118964, "codigo": "2024NR000030", "PA": 21023, "MACROR": 10},
-    {"id": 118965, "codigo": "2024NR000031", "PA": 21023, "MACROR": 14},
-    {"id": 118966, "codigo": "2024NR000032", "PA": 21023, "MACROR": 9},
-    {"id": 118968, "codigo": "2024NR000033", "PA": 21069, "MACROR": 13},
-    {"id": 118969, "codigo": "2024NR000034", "PA": 21069, "MACROR": 3},
-    {"id": 133945, "codigo": "2024NR000036", "PA": 20848, "MACROR": 3},
-    {"id": 133946, "codigo": "2024NR000037", "PA": 20848, "MACROR": 2},
+    {"id": 168685, "codigo": "2024NR000122", "PA": 21109, "MACROR": 3},
+    {"id": 168688, "codigo": "2024NR000123", "PA": 21108, "MACROR": 3},
+    {"id": 168691, "codigo": "2024NR000124", "PA": 21107, "MACROR": 1},
+    {"id": 168692, "codigo": "2024NR000125", "PA": 21107, "MACROR": 3},
+    {"id": 168729, "codigo": "2024NR000126", "PA": 21069, "MACROR": 5},
+    {"id": 168730, "codigo": "2024NR000127", "PA": 21069, "MACROR": 1},
+    {"id": 168731, "codigo": "2024NR000128", "PA": 21069, "MACROR": 3},
+    {"id": 168732, "codigo": "2024NR000129", "PA": 21069, "MACROR": 8},
+    {"id": 168739, "codigo": "2024NR000130", "PA": 21024, "MACROR": 1},
+    {"id": 168740, "codigo": "2024NR000131", "PA": 21024, "MACROR": 9},
+    {"id": 168741, "codigo": "2024NR000132", "PA": 21024, "MACROR": 3},
+    {"id": 168742, "codigo": "2024NR000133", "PA": 21024, "MACROR": 13},
+    {"id": 168743, "codigo": "2024NR000134", "PA": 21024, "MACROR": 10},
+    {"id": 168757, "codigo": "2024NR000135", "PA": 21023, "MACROR": 1},
+    {"id": 168758, "codigo": "2024NR000136", "PA": 21023, "MACROR": 3},
+    {"id": 168759, "codigo": "2024NR000137", "PA": 21023, "MACROR": 7},
+    {"id": 168760, "codigo": "2024NR000138", "PA": 21023, "MACROR": 9},
+    {"id": 168761, "codigo": "2024NR000139", "PA": 21023, "MACROR": 8},
+    {"id": 168762, "codigo": "2024NR000140", "PA": 21023, "MACROR": 2},
+    {"id": 168763, "codigo": "2024NR000141", "PA": 21023, "MACROR": 4},
+    {"id": 168764, "codigo": "2024NR000142", "PA": 21023, "MACROR": 14},
+    {"id": 168765, "codigo": "2024NR000143", "PA": 21023, "MACROR": 6},
+    {"id": 168766, "codigo": "2024NR000144", "PA": 21023, "MACROR": 12},
+    {"id": 168767, "codigo": "2024NR000145", "PA": 21023, "MACROR": 5},
+    {"id": 168772, "codigo": "2024NR000146", "PA": 20867, "MACROR": 1},
+    {"id": 168773, "codigo": "2024NR000147", "PA": 20867, "MACROR": 3},
+    {"id": 168774, "codigo": "2024NR000148", "PA": 20867, "MACROR": 2},
+    {"id": 168775, "codigo": "2024NR000149", "PA": 20867, "MACROR": 8},
+    {"id": 168776, "codigo": "2024NR000150", "PA": 20867, "MACROR": 4},
+    {"id": 168777, "codigo": "2024NR000151", "PA": 20867, "MACROR": 7},
+    {"id": 168778, "codigo": "2024NR000152", "PA": 20867, "MACROR": 14},
+    {"id": 168898, "codigo": "2024NR000153", "PA": 20848, "MACROR": 9},
+    {"id": 168899, "codigo": "2024NR000154", "PA": 20848, "MACROR": 2},
+    {"id": 168900, "codigo": "2024NR000155", "PA": 20848, "MACROR": 3},
+    {"id": 168901, "codigo": "2024NR000156", "PA": 20848, "MACROR": 12},
+    {"id": 168902, "codigo": "2024NR000157", "PA": 20848, "MACROR": 1},
 ]
+
+
 
 ## ÁREA DE DADOS E FUNÇÕES DE CONEXÃO COM O BANCO DE DADOS
 
@@ -223,8 +265,8 @@ WITH t0 AS (
         s.W_TIPOINT2
     FROM tb_producao_servico p
     LEFT JOIN tt_spu s ON s.w_num_protocolo = p.nu_ordem
-    WHERE dt_producao >= to_date('01/01/2022','dd/mm/yyyy') 
-        and dt_producao <= to_date('31/12/2022','dd/mm/yyyy') 
+    WHERE dt_producao >= to_date('01/01/2023','dd/mm/yyyy') 
+        and dt_producao <= to_date('31/12/2023','dd/mm/yyyy') 
         AND fl_status = 3 
         AND s.W_QTD1 = 0 
         AND s.W_TIPOINT2 IS NOT NULL
@@ -267,6 +309,48 @@ SELECT
     W_TIPOINT2
 FROM t3
 WHERE nu_ordem > 0 
+AND nu_ordem in(
+			2400002278, 2311197120, 2400000174, 2400000056, 2400005517,
+            2400002082, 2400000166, 2400002961, 2400003168, 2400003166,
+            2400002373, 2400001322, 2400002958, 2400000035, 2400000058,
+            2400003167, 2400000161, 2400000116, 2400003147, 2400003044,
+            2400003304, 2400003237, 2400003146, 2400002957, 2400003283,
+            2400002219, 2400000037, 2400002365, 2400003033, 2400000034,
+            2400002733, 2400002845, 2306720104, 2400003284, 2306813994,
+            2400000111, 2400000097, 2400002517, 2400003116, 2400003353,
+            2400002673, 2400003114, 2400000020, 2400000052, 2400002506,
+            2400002752, 2400003118, 2400002755, 2400002631, 2400002454,
+            2400003217, 2307192721, 2400002633, 2400002267, 2400003579,
+            2400000040, 2400003035, 2400003148, 2311089859, 2400000080,
+            2400002221, 2400003117, 2400003364, 2400002648, 2400002555,
+            2400002368, 2311144280, 2400002265, 2400003570, 2400002610,
+            2311270898, 2400002224, 2400002313, 2400001455, 2400000128,
+            2400002456, 2400002361, 2306179489, 2400003308, 2308541185,
+            2400000458, 2400000162, 2400002213, 2400006025, 2400002654,
+            2310858549, 2310787226, 2400000106, 2305785059, 2400002844,
+            2400002434, 2400000598, 2400003110, 2400002841, 2308825078,
+            2400002842, 2306224484, 2400003150, 2400002371, 2400003236,
+            2310795105, 2400002302, 2400000092, 2400002662, 2306980351,
+            2400002672, 2400003356, 2400000231, 2305166162, 2400002283,
+            2400003261, 2400002838, 2305551678, 2400002252, 2400002665,
+            2400002483, 2400003032, 2400000607, 2400003708, 2400005539,
+            2400002372, 2400001556, 2400002770, 2400002581, 2400002364,
+            2400002923, 2400000920, 2400003031, 2400001717, 2400003223,
+            2306831623, 2400003149, 2400002329, 2306224506, 2400002750,
+            2400003318, 2400002840, 2306326252, 2400002369, 2400005432,
+            2400002568, 2400002561, 2307177200, 2400001573, 2400002960,
+            2400002843, 2311207533, 2311201918, 2400000151, 2400002629,
+            2400005023, 2400000578, 2400001828, 2400003145, 2400005255,
+            2400002510, 2400002839, 2400002490, 2400002367, 2400003312,
+            2311128196, 2400002637, 2400000582, 2400002225, 2307237920,
+            2308199002, 2305766100, 2400006029, 2400005029, 2400002370,
+            2306179640, 2400004047, 2400002736, 2306891278, 2400002837,
+            2400003189, 2400006104, 2311220513, 2400000440, 2306980360,
+            2400003241, 2304752254, 2307269910, 2310997352, 2400000452,
+            2400004581, 2400005523, 2306224530, 2400000457, 2400002185,
+            2400000303, 2400002261, 2400003636, 2400000455, 2400000593,
+            2400002674, 2400005204, 2310920660, 2400002688, 2400005443
+)
 ORDER BY W_TIPOINT2
 """
 
@@ -294,7 +378,7 @@ def formatar_dados(nu_ordem, dt_producao, PA, vl_liquido, TPESSOA, MACROR, nu_cg
     cnpj_cpf = ''.join(filter(str.isdigit, cnpj_cpf_para_formatar))
 
     # Verificar se é CPF ou CNPJ
-    if len(cnpj_cpf) <= 11:
+    if tipo_pessoa == 'F':
         # Garantir que o CPF tenha 11 caracteres, preenchendo com zeros à esquerda se necessário
         cnpj_cpf = cnpj_cpf.zfill(11)
     else:
@@ -570,6 +654,8 @@ def aba_detalhamento(nome_cidade):
             tempo_espera(0.5)
             # Campo Municipio
             print(f'Nome da cidade: {nome_cidade}')
+            if nome_cidade == 'REDENCAO':
+                nome_cidade = 'REDENÇÃO'
             campo_municipio = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovMunicipio:itxLovDec::content"]')
             campo_municipio.send_keys(Keys.CONTROL + 'a')
             tempo_espera(1)
@@ -831,16 +917,25 @@ if resultados:
     processos_pendentes = info_processos["processos"]
 
     for resultado in resultados:
-        numero_processo, data_producao, pa, valor_dea, tipo_pessoa, macroregiao, cnpj_cpf, nome_cidade, tipo_tratamento, flag, codigo_dea = formatar_dados(*resultado)
-        codigo_nr = obter_codigo_nr(pa, macroregiao)
-        print(f'Número do processo: {numero_processo}, Data de produção: {data_producao}, Valor DEA: {valor_dea}, CNPJ/CPF: {cnpj_cpf}, Nome da cidade: {nome_cidade}, Tipo de tratamento: {tipo_tratamento}, flag: {flag}, Código DEA: {codigo_dea}, Código NR: {codigo_nr}, PA: {pa}, Macroregião: {macroregiao}')
+        tentativas = 0
+        sucesso = False
+        while not sucesso and tentativas < 5:
+            try:
+                numero_processo, data_producao, pa, valor_dea, tipo_pessoa, macroregiao, cnpj_cpf, nome_cidade, tipo_tratamento, flag, codigo_dea = formatar_dados(*resultado)
+                codigo_nr = obter_codigo_nr(pa, macroregiao)
+                print(f'Número do processo: {numero_processo}, Data de produção: {data_producao}, Valor DEA: {valor_dea}, CNPJ/CPF: {cnpj_cpf}, Nome da cidade: {nome_cidade}, Tipo de tratamento: {tipo_tratamento}, flag: {flag}, Código DEA: {codigo_dea}, Código NR: {codigo_nr}, PA: {pa}, Macroregião: {macroregiao}')
 
-        # Verifique se o número do processo está na lista de processos pendentes
-        if numero_processo in processos_pendentes:
-            if not inserir_empenho_dea(numero_processo, data_producao, valor_dea, cnpj_cpf, nome_cidade, tipo_tratamento, codigo_dea, codigo_nr):
-                processos_falhados.append(numero_processo)
-            else:
-                atualizar_tt_spu(numero_processo)
+                # Verifique se o número do processo está na lista de processos pendentes
+                if numero_processo in processos_pendentes:
+                    if not inserir_empenho_dea(numero_processo, data_producao, valor_dea, cnpj_cpf, nome_cidade, tipo_tratamento, codigo_dea, codigo_nr):
+                        processos_falhados.append(numero_processo)
+                    else:
+                        atualizar_tt_spu(numero_processo)
+                        sucesso = True
+            except Exception as e:
+                tentativas += 1
+                logging.error(f'Erro ao processar o resultado {resultado}: {e}')
+                time.sleep(3)
 
     # Verifique se há processos falhados e os processe novamente, se necessário
     if processos_falhados:

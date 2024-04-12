@@ -130,43 +130,15 @@ def conexao_bd_oracle(ambiente_escolhido, query, params=None, is_update=False):
 
 # Query BD
 query_selecionar_processos = """
-SELECT tps.NU_ORDEM, tps.DT_PRODUCAO, tps.NU_CGC_CPF, tps.VL_PAGAMENTO
+SELECT DISTINCT tps.NU_ORDEM, tps.DT_PRODUCAO, tps.NU_CGC_CPF, tps.VL_PAGAMENTO
 FROM
     TB_PAGAMENTO_SERVICO tps
 INNER JOIN
     TT_SPU ts ON tps.NU_ORDEM = ts.W_NUM_PROTOCOLO
 WHERE 
     tps.NU_ORDEM IN (
-        2301405057,
-        2212111457,
-        2211758600,
-        2303902260,
-        2307228491,
-        2302969361,
-        2301467869,
-        2307419726,
-        2302933812,
-        2302933855,
-        2302000794,
-        2211725400,
-        2303902287,
-        2301467800,
-        2300446302,
-        2210280227,
-        2300301142,
-        2204824350,
-        2303902201,
-        2300584225,
-        2301627017,
-        2211758589,
-        2304908114,
-        2207675917,
-        2302460094,
-        2301405065,
-        2303902228,
-        2302014442,
-        2209357572,
-        2301858370
+        2400000220,
+        2400003178
     )
     AND ts.W_QTD1 IS NULL 
 ORDER BY VL_PAGAMENTO DESC
@@ -294,7 +266,7 @@ def tela_login(ambiente_escolhido):
             navegador.get(ambiente_escolhido['url_pagina_inicial'])
             return True
         except Exception as e:
-            logging.error(f'Tentattiva {i + 1} - Erro ao tentar logar no sistema: {e}')
+            logging.error(f'Tentativa {i + 1} - Erro ao tentar logar no sistema: {e}')
             logging.error(traceback.format_exc())
             if i == 2:
                 return False
@@ -327,7 +299,7 @@ def selecionar_dea():
                 return False
 
 def identificacao(processo, data_processo, data_atual, cnpj_cpf):
-    for tentativa in range(3):
+    for tentativa in range(10):
         try:
             # campo UG
             campo_ug = navegador.find_element(By.XPATH, '//*[@id="tplSip:pnlContent:lovUnidadeGestora:itxLovDec::content"]')
@@ -371,11 +343,12 @@ def identificacao(processo, data_processo, data_atual, cnpj_cpf):
             return True
         except Exception as e:
             logging.error(f'Tentativa {tentativa + 1} - Erro na etapa de identificacao da despesa: {e}')
-            if tentativa == 2:
+            logging.error(traceback.format_exc())
+            if tentativa == 9:
                 return False
 
 def aba_detalhamento(valor_processo):
-    for tentativa in range(3):
+    for tentativa in range(10):
         try:
             # Clicar em botão Detalhamento
             botao_detalhamento = navegador.find_element(By.XPATH, '//*[@id="tplSip:pnlContent:slcClassificacao::disAcr"]')
@@ -442,12 +415,13 @@ def aba_detalhamento(valor_processo):
             return True
         except Exception as e:
             logging.error(f'Tentativa {tentativa + 1} - Erro na Aba Detalhamento: {e}')
-            if tentativa == 2:  # Se foi a última tentativa, lança a exceção
+            logging.error(traceback.format_exc())
+            if tentativa == 9:  # Se foi a última tentativa, lança a exceção
                 identificacao(processo, data_processo, data_atual, cnpj_cpf)
                 return False
 
 def aba_observacao():
-    for tentativa in range(3):
+    for tentativa in range(10):
         try:
             # Botão Observação
             botao_observacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:pnlContent:slcObservacao::disAcr"]')
@@ -485,29 +459,35 @@ def aba_observacao():
             return True
         except Exception as e:
             logging.error(f'Tentativa {tentativa + 1} - Erro na Aba Observacao: {e}')
-            if tentativa == 2:  # Se foi a última tentativa, lança a exceção
+            logging.error(traceback.format_exc())
+            if tentativa == 9:  # Se foi a última tentativa, lança a exceção
                 identificacao(processo, data_processo, data_atual, cnpj_cpf)
                 return False
 
 def inserir_dea(processo, data_processo, data_atual, cnpj_cpf, valor_processo):
-    try:        
-        # btn Inserir DEA
-        botao_inserir_dea = navegador.find_element(By.XPATH, '//*[@id="pagTemplate:tblEntidadeDec:btnInsert"]/a/span')
-        botao_inserir_dea.click()
-        tempo_espera(2)
-        # Identificação DEA
-        if not identificacao(processo, data_processo, data_atual, cnpj_cpf):
-            return False
-        # Aba Detalhamento
-        if not aba_detalhamento(valor_processo):
-            return False
-        # Aba Observação
-        if not aba_observacao():
-            return False
-        return True
-    except Exception as e:
-        logging.error(f'Erro ao tentar inserir DEA: {e}')
-        return False
+    for tentativa in range(5):
+        try:     
+            # btn Inserir DEA
+            botao_inserir_dea = navegador.find_element(By.XPATH, '//*[@id="pagTemplate:tblEntidadeDec:btnInsert"]/a/span')
+            botao_inserir_dea.click()
+            tempo_espera(2)
+            # Identificação DEA
+            if not identificacao(processo, data_processo, data_atual, cnpj_cpf):
+                return False
+            # Aba Detalhamento
+            if not aba_detalhamento(valor_processo):
+                return False
+            # Aba Observação
+            if not aba_observacao():
+                return False
+            return True
+        except Exception as e:
+            logging.error(f'Tentativa {tentativa + 1} - Erro ao inserir DEA para o processo {processo}: {e}')
+            logging.error(traceback.format_exc())
+            if tentativa == 4:
+                logging.error(f'Tentativa {tentativa + 1} - Erro ao inserir DEA para o processo {processo}: {e}')
+                print(f'Erro ao inserir DEA para o processo {processo}: {e}')
+                return False
         
 ################################
 ## ÁREA EXECUÇÃO E PROCESSAMENTO
