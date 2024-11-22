@@ -214,7 +214,7 @@ FROM ASSIST.TB_REGISTRO_PROCESSO_SALDO_RESERVA r
 LEFT JOIN ASSIST.TB_CREDOR_GENERICO c
     ON c.NOTA_RESERVA = r.NOTA_RESERVA
 WHERE c.NOTA_RESERVA IS NULL
-AND r.NOTA_RESERVA IN ('2024NR000136')
+AND r.NOTA_RESERVA IN ('2024NR000908')
 """
 
 # DADOS NECESSÁRIOS: NR, VALOR, AÇÃO(TIPO TRATAMENTO), 
@@ -412,14 +412,15 @@ def selecionar_empenho_cg():
             # Input radio Credor Genérico
             input_radio_cg = navegador.find_element(By.XPATH, '//*[@id="tplSip:radTipoCredor:_2"]')
             input_radio_cg.click()
+            tempo_espera(5)
             # campo Código do Credor Genérico
-            campo_cg = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovPJ:itxLovDec::content"]')
-            campo_cg.send_keys(Keys.CONTROL + 'a')
-            tempo_espera(3)
+            campo_cg = navegador.find_element(By.XPATH, '/html/body/div[1]/form/div[1]/div[5]/div/div[1]/div[2]/div/div/div/div[6]/div/div[1]/div[2]/div/div[6]/div/div[1]/div[3]/div/div[3]/div/div[5]/div/div[1]/div[2]/div/div[2]/div/div[1]/div/div/div/div/table/tbody/tr/td/table/tbody/tr[6]/td[2]/table/tbody/tr/td[3]/table/tbody/tr/td[1]/table/tbody/tr/td[2]/input')
+            campo_cg.clear()
+            tempo_espera(5)
             campo_cg.send_keys('CG0000029')
-            tempo_espera(0.5)
-            campo_cg.send_keys(Keys.TAB)
             tempo_espera(2)
+            campo_cg.send_keys(Keys.TAB)
+            tempo_espera(3)
             return True
         except Exception as e:
             logging.error(f'Tentativa {i + 1} - Erro ao tentar selecionar o código de credor generico: {e}')
@@ -436,13 +437,13 @@ def aba_classificacao(nr):
             botao_aba_classificacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcClassificacao::disAcr"]')
             botao_aba_classificacao.click()
             tempo_espera(1)
-            # Select Tipo Reconhecimento de Passivo
-            select_tipo_reconhecimento_de_passivo = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcTipoRecPassivo::content"]')
-            opcao_tipo_reconhecimento_de_passivo = Select(select_tipo_reconhecimento_de_passivo)
-            # Select 0 = Passivo a ser reconhecido
-            opcao_tipo_reconhecimento_de_passivo.select_by_value('0')
-            select_tipo_reconhecimento_de_passivo.send_keys(Keys.TAB)
-            tempo_espera(2)
+            # # Select Tipo Reconhecimento de Passivo
+            # select_tipo_reconhecimento_de_passivo = navegador.find_element(By.XPATH, '//*[@id="tplSip:slcTipoRecPassivo::content"]')
+            # opcao_tipo_reconhecimento_de_passivo = Select(select_tipo_reconhecimento_de_passivo)
+            # # Select 0 = Passivo a ser reconhecido
+            # opcao_tipo_reconhecimento_de_passivo.select_by_value('0')
+            # select_tipo_reconhecimento_de_passivo.send_keys(Keys.TAB)
+            tempo_espera(5)
             # Campo NR
             campo_nr = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovNotaReserva:itxLovDec::content"]')
             campo_nr.send_keys(Keys.CONTROL + 'a')
@@ -451,7 +452,7 @@ def aba_classificacao(nr):
             tempo_espera(1)
             campo_nr.send_keys(Keys.TAB)
             tempo_espera(2)
-            # Select Efeito do Documento
+            # Select Efeito do documento
             select_efeito_do_documento = navegador.find_element(By.XPATH, '//*[@id="tplSip:pnlClassificacao_chc_595::content"]')
             opcao_efeito_do_documento = Select(select_efeito_do_documento)
             opcao_efeito_do_documento.select_by_value('0')
