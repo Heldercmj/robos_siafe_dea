@@ -138,8 +138,12 @@ print(f'senha: {ambiente_escolhido["db_password"]}')
 # if token is not None:
 #     obter_dados_api_siafe(ambiente_escolhido, token)
 
+#Dados NRs válidas 2022 - HDOC
+# dados_nr = [
+#     {"id": 133945, "codigo": "2024NR001158", "PA": 20848, "MACROR": 3},
+# ]
 
-## Dados das NRs válidas 2022
+# Dados das NRs válidas 2022
 # dados_nr = [
 #     {"id": 118961, "codigo": "2024NR000027", "PA": 21023, "MACROR": 3},
 #     {"id": 118962, "codigo": "2024NR000028", "PA": 21023, "MACROR": 8},
@@ -192,6 +196,10 @@ dados_nr = [
     {"id": 168901, "codigo": "2024NR000156", "PA": 20848, "MACROR": 12},
     {"id": 168902, "codigo": "2024NR000157", "PA": 20848, "MACROR": 1},
 ]
+# NR HEMOCE DEA 2023
+# dados_nr = [
+#     {"id": 168685, "codigo": "2024NR000353", "PA": 20848, "MACROR": 3}
+# ]
 
 
 
@@ -273,7 +281,7 @@ WITH t0 AS (
         AND EXISTS(
             SELECT 1 
             FROM tt_spu_mov m 
-            WHERE m.num_prot = nu_ordem 
+            WHERE m.num_prot = p.nu_ordem 
                 AND m.loc_para = '470000087'  
                 AND m.motivo = 7 
                 AND m.cd_registro = (SELECT max(i.cd_registro) FROM tt_spu_mov i WHERE i.num_prot = m.num_prot)
@@ -308,10 +316,9 @@ SELECT
     W_QTD1,
     W_TIPOINT2
 FROM t3
-WHERE nu_ordem > 0 
-AND nu_cgc_cpf NOT IN(7954571011491)
-ORDER BY W_TIPOINT2 DESC
-FETCH FIRST 200 ROWS ONLY
+WHERE nu_ordem > 0
+AND nu_cgc_cpf NOT IN (7954571011491, 24862986000177, 41580077000165)
+ORDER BY W_TIPOINT2 ASC
 """
 
 # Formatação de dados do BD para serem usados no SIAFE
@@ -481,6 +488,14 @@ def validar_campo_preenchido(xpath):
             time.sleep(1)  # Espera um segundo antes de tentar novamente
     return False  # Retorna False se o campo não for preenchido após 3 tentativas
 
+def reinciar_navegador(navegador, ambiente_escolhido, servico):
+    navegador.quit()
+    time.sleep(5)
+    navegador = webdriver.Chrome(service = servico)
+    navegador.get(ambiente_escolhido['url_siafe'])
+    navegador.maximize_window()
+    tela_login(ambiente_escolhido, navegador)
+
 
 def tela_login(ambiente_escolhido):
     for i in range(3):
@@ -507,6 +522,7 @@ def tela_login(ambiente_escolhido):
             logging.error(f'Tentattiva {i + 1} - Erro ao tentar logar no sistema: {e}')
             logging.error(traceback.format_exc())
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def selecionar_menu_empenho():
@@ -535,6 +551,7 @@ def selecionar_menu_empenho():
             logging.error(f'Tentativa {i + 1} - Erro ao tentar selecionar o menu empenho: {e}')
             logging.error(traceback.format_exc())
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def selecionar_empenho_dea(cnpj_cpf):
@@ -559,6 +576,7 @@ def selecionar_empenho_dea(cnpj_cpf):
             logging.error(f'Tentativa {i + 1} - Erro ao tentar selecionar o empenho DEA: {e}')
             logging.error(traceback.format_exc())
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def aba_classificacao(codigo_nr):
@@ -594,6 +612,7 @@ def aba_classificacao(codigo_nr):
             logging.error(f'Tentativa {i + 1} - Erro ao tentar executar a função aba_classificacao: {e}')
             logging.error(traceback.format_exc())
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def aba_detalhamento(nome_cidade):
@@ -613,6 +632,8 @@ def aba_detalhamento(nome_cidade):
             # Select Modalidade de Licitação
             select_modalidade_licitacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:cbxTipoLicitacao::content"]')
             opcao_modalidade_licitacao = Select(select_modalidade_licitacao)
+            ##### 4 = Dispensa de Licitação -> HEMOCE
+            ##### 5 = Inexigibilidade de Licitação
             opcao_modalidade_licitacao.select_by_value('5')
             tempo_espera(0.5)
             select_modalidade_licitacao.send_keys(Keys.TAB)
@@ -655,6 +676,7 @@ def aba_detalhamento(nome_cidade):
             logging.error(f'Tentativa {i + 1} - Falha ao tentar executar a função aba_detalhamento {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
         
 def aba_itens(codigo_dea, valor_dea):
@@ -697,6 +719,7 @@ def aba_itens(codigo_dea, valor_dea):
             logging.error(f'Tentativa {i + 1} - Falha ao tentar executar a função aba_itens {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
         
 def aba_produtos(data_producao, tipo_tratamento, nome_cidade, valor_dea):
@@ -752,6 +775,7 @@ def aba_produtos(data_producao, tipo_tratamento, nome_cidade, valor_dea):
             logging.error(f'Tentativa {i + 1} - Falha ao tentar executar a função aba_produtos {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
     
 def aba_processo(numero_processo):
@@ -774,6 +798,7 @@ def aba_processo(numero_processo):
             logging.error(f'Tentativa {i + 1} - Falha ao tentar executar a função aba_processo {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def aba_observacao(tipo_tratamento, data_producao, nome_cidade):
@@ -794,6 +819,7 @@ def aba_observacao(tipo_tratamento, data_producao, nome_cidade):
             logging.error(f'Tentativa {i + 1} - Falha ao tentar executar a função aba_observacao {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 def salvar_rascunho_empenho_dea(ambiente_escolhido):
@@ -812,6 +838,7 @@ def salvar_rascunho_empenho_dea(ambiente_escolhido):
             logging.error(f'Tentativa {i + 1} - Erro ao tentar contabilizar o empenho: {e}')
             logging.error(traceback.format_exc())  # imprime a exceção completa
             if i == 2:
+                reinciar_navegador(ambiente_escolhido)
                 return False
 
 # #######################

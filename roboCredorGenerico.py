@@ -73,77 +73,12 @@ def configuracao_de_ambiente(ambiente):
 
 # Setar ambiente
 
-ambiente_escolhido = configuracao_de_ambiente("homologacao")
+ambiente_escolhido = configuracao_de_ambiente("producao")
 
 print(f"Dados do arquivo .env: {env_path}: ")
 print(f'dns: {ambiente_escolhido["db_dsn"]}')
 print(f'usuario: {ambiente_escolhido["db_user"]}')
 print(f'senha: {ambiente_escolhido["db_password"]}')
-
-
-#Dados NRs válidas 2022 - HDOC
-# dados_nr = [
-#     {"id": 133945, "codigo": "2024NR001158", "PA": 20848, "MACROR": 3},
-# ]
-
-# Dados das NRs válidas 2022
-# dados_nr = [
-#     {"id": 118961, "codigo": "2024NR000027", "PA": 21023, "MACROR": 3},
-#     {"id": 118962, "codigo": "2024NR000028", "PA": 21023, "MACROR": 8},
-#     {"id": 118963, "codigo": "2024NR000029", "PA": 21023, "MACROR": 7},
-#     {"id": 118964, "codigo": "2024NR000030", "PA": 21023, "MACROR": 10},
-#     {"id": 118965, "codigo": "2024NR000031", "PA": 21023, "MACROR": 14},
-#     {"id": 118966, "codigo": "2024NR000032", "PA": 21023, "MACROR": 9},
-#     {"id": 118968, "codigo": "2024NR000033", "PA": 21069, "MACROR": 13},
-#     {"id": 118969, "codigo": "2024NR000034", "PA": 21069, "MACROR": 3},
-#     {"id": 133945, "codigo": "2024NR000036", "PA": 20848, "MACROR": 3},
-#     {"id": 133946, "codigo": "2024NR000037", "PA": 20848, "MACROR": 2},
-# ]
-
-## Dados das NRs Válidas 2023
-dados_nr = [
-    {"id": 168685, "codigo": "2024NR000122", "PA": 21109, "MACROR": 3},
-    {"id": 168688, "codigo": "2024NR000123", "PA": 21108, "MACROR": 3},
-    {"id": 168691, "codigo": "2024NR000124", "PA": 21107, "MACROR": 1},
-    {"id": 168692, "codigo": "2024NR000125", "PA": 21107, "MACROR": 3},
-    {"id": 168729, "codigo": "2024NR000126", "PA": 21069, "MACROR": 5},
-    {"id": 168730, "codigo": "2024NR000127", "PA": 21069, "MACROR": 1},
-    {"id": 168731, "codigo": "2024NR000128", "PA": 21069, "MACROR": 3},
-    {"id": 168732, "codigo": "2024NR000129", "PA": 21069, "MACROR": 8},
-    {"id": 168739, "codigo": "2024NR000130", "PA": 21024, "MACROR": 1},
-    {"id": 168740, "codigo": "2024NR000131", "PA": 21024, "MACROR": 9},
-    {"id": 168741, "codigo": "2024NR000132", "PA": 21024, "MACROR": 3},
-    {"id": 168742, "codigo": "2024NR000133", "PA": 21024, "MACROR": 13},
-    {"id": 168743, "codigo": "2024NR000134", "PA": 21024, "MACROR": 10},
-    {"id": 168757, "codigo": "2024NR000135", "PA": 21023, "MACROR": 1},
-    {"id": 168758, "codigo": "2024NR000136", "PA": 21023, "MACROR": 3},
-    {"id": 168759, "codigo": "2024NR000137", "PA": 21023, "MACROR": 7},
-    {"id": 168760, "codigo": "2024NR000138", "PA": 21023, "MACROR": 9},
-    {"id": 168761, "codigo": "2024NR000139", "PA": 21023, "MACROR": 8},
-    {"id": 168762, "codigo": "2024NR000140", "PA": 21023, "MACROR": 2},
-    {"id": 168763, "codigo": "2024NR000141", "PA": 21023, "MACROR": 4},
-    {"id": 168764, "codigo": "2024NR000142", "PA": 21023, "MACROR": 14},
-    {"id": 168765, "codigo": "2024NR000143", "PA": 21023, "MACROR": 6},
-    {"id": 168766, "codigo": "2024NR000144", "PA": 21023, "MACROR": 12},
-    {"id": 168767, "codigo": "2024NR000145", "PA": 21023, "MACROR": 5},
-    {"id": 168772, "codigo": "2024NR000146", "PA": 20867, "MACROR": 1},
-    {"id": 168773, "codigo": "2024NR000147", "PA": 20867, "MACROR": 3},
-    {"id": 168774, "codigo": "2024NR000148", "PA": 20867, "MACROR": 2},
-    {"id": 168775, "codigo": "2024NR000149", "PA": 20867, "MACROR": 8},
-    {"id": 168776, "codigo": "2024NR000150", "PA": 20867, "MACROR": 4},
-    {"id": 168777, "codigo": "2024NR000151", "PA": 20867, "MACROR": 7},
-    {"id": 168778, "codigo": "2024NR000152", "PA": 20867, "MACROR": 14},
-    {"id": 168898, "codigo": "2024NR000153", "PA": 20848, "MACROR": 9},
-    {"id": 168899, "codigo": "2024NR000154", "PA": 20848, "MACROR": 2},
-    {"id": 168900, "codigo": "2024NR000155", "PA": 20848, "MACROR": 3},
-    {"id": 168901, "codigo": "2024NR000156", "PA": 20848, "MACROR": 12},
-    {"id": 168902, "codigo": "2024NR000157", "PA": 20848, "MACROR": 1},
-]
-# NR HEMOCE DEA 2023
-# dados_nr = [
-#     {"id": 168685, "codigo": "2024NR000353", "PA": 20848, "MACROR": 3}
-# ]
-
 
 
 ## ÁREA DE DADOS E FUNÇÕES DE CONEXÃO COM O BANCO DE DADOS
@@ -161,35 +96,31 @@ def conexao_bd_oracle(ambiente_escolhido, query, params=None, is_update=False):
         cursor = connection.cursor()
 
         # Defina a zona horária (se necessário)
-
         query_zone = """ALTER SESSION SET TIME_ZONE = '-3:0'"""
         cursor.execute(query_zone)
 
         # Executar a consulta ou a operação de atualização com parâmetros, se houver
-
         if params:
-            if is_update:
-                cursor.execute(query, params)
-                connection.commit()  # Se é uma operação de atualização, faça commit
-            else:
-                cursor.execute(query, params)
+            cursor.execute(query, params)
         else:
-            if is_update:
-                cursor.execute(query)
-                connection.commit()  # Se é uma operação de atualização, faça commit
-            else:
-                cursor.execute(query)
+            cursor.execute(query)
+
+        # Se é uma operação de atualização, faça commit
+        if is_update:
+            connection.commit()
+
         # Obter todas as linhas resultantes, apenas se for uma consulta
         rows = cursor.fetchall() if not is_update else None
+        return rows if not is_update else True
     except cx_Oracle.DatabaseError as e:
         logging.error("Erro Oracle: %s", e)
-        rows = None
+        logging.error(traceback.format_exc())
+        return False
     finally:
         if cursor:
             cursor.close()
         if connection:
             connection.close()
-    return rows if not is_update else rows is not None
 
 # QUERY PARA SELECIONAR OS DEAS REALIZADOS
 
@@ -214,8 +145,23 @@ FROM ASSIST.TB_REGISTRO_PROCESSO_SALDO_RESERVA r
 LEFT JOIN ASSIST.TB_CREDOR_GENERICO c
     ON c.NOTA_RESERVA = r.NOTA_RESERVA
 WHERE c.NOTA_RESERVA IS NULL
-AND r.NOTA_RESERVA IN ('2024NR000908')
+AND r.NOTA_RESERVA IN (
+    '2024NR001812', '2024NR001792', '2024NR001785', '2024NR001828', '2024NR001789', 
+    '2024NR001756', '2024NR001806', '2024NR001776', '2024NR001799', '2024NR001822',
+    '2024NR001753', '2024NR001764', '2024NR001811', '2024NR001779', '2024NR001775',
+    '2024NR001817', '2024NR001794', '2024NR001770', '2024NR001819', '2024NR001798',
+    '2024NR001814', '2024NR001777', '2024NR001803', '2024NR001823', '2024NR001765',
+    '2024NR001815', '2024NR001786', '2024NR001801', '2024NR001760', '2024NR001807',
+    '2024NR001793', '2024NR001752', '2024NR001808', '2024NR001780', '2024NR001802',
+    '2024NR001751', '2024NR001766', '2024NR001813', '2024NR001781', '2024NR001821',
+    '2024NR001761', '2024NR001809', '2024NR001782', '2024NR001797', '2024NR001755',
+    '2024NR001758', '2024NR001810', '2024NR001784', '2024NR001795', '2024NR001826',
+    '2024NR001791', '2024NR001750', '2024NR001767', '2024NR001816', '2024NR001783',
+    '2024NR001796', '2024NR001825', '2024NR001788', '2024NR001818', '2024NR001778',
+    '2024NR001804', '2024NR001827', '2024NR001754')
 """
+
+
 
 # DADOS NECESSÁRIOS: NR, VALOR, AÇÃO(TIPO TRATAMENTO), 
 
@@ -237,6 +183,8 @@ def formatar_dados(NOTA_RESERVA, SALDO, ACAO):
 
 resultados = conexao_bd_oracle(ambiente_escolhido, query_credor_generico)
 
+print(f'retorno da query: {resultados}')
+
 
 def verificar_cg_para_empenhar(resultados):
     if resultados:
@@ -248,60 +196,6 @@ def verificar_cg_para_empenhar(resultados):
         return {"mensagem": "Não há credores genericos a serem empenhados.", "quantidade": 0, "credor_generico": []}
     
 print(verificar_cg_para_empenhar(resultados))
-
-# ÁREA UPDATE NO BANCO DE DADOS
-
-def atualizar_tabela_credor_generico(resultados):
-    """
-    Atualiza a tabela TB_CREDOR_GENERICO com as informações de NOTA_RESERVA e VALOR.
-    Os dados são obtidos diretamente da variável `resultados` e formatados com `formatar_dados`.
-
-    Args:
-        resultados (list): Resultado do SELECT com os dados (NOTA_RESERVA, SALDO, ACAO).
-    
-    Returns:
-        dict: Resultado do processamento com status e mensagens.
-    """
-    try:
-        if not resultados:
-            return {"status": "sucesso", "mensagem": "Nenhuma atualização necessária. Nenhum dado a processar."}
-
-        # Query de inserção/atualização
-        query_update = """
-        MERGE INTO ASSIST.TB_CREDOR_GENERICO c
-        USING (SELECT :nota_reserva AS NOTA_RESERVA, :valor AS VALOR FROM DUAL) src
-        ON (c.NOTA_RESERVA = src.NOTA_RESERVA)
-        WHEN MATCHED THEN
-            UPDATE SET VALOR = src.VALOR
-        WHEN NOT MATCHED THEN
-            INSERT (NOTA_RESERVA, VALOR)
-            VALUES (src.NOTA_RESERVA, src.VALOR)
-        """
-        
-        # Iterar pelos resultados e processar cada registro
-        for row in resultados:
-            try:
-                # Formatar dados usando a função `formatar_dados`
-                nr, valor, _ = formatar_dados(row[0], row[1], row[2])  
-                
-                # Executar a query para atualizar/inserir no banco
-                conexao_bd_oracle(
-                    ambiente_escolhido, 
-                    query_update, 
-                    params={"nota_reserva": nr, "valor": valor}, 
-                    is_update=True
-                )
-            except Exception as e:
-                logging.error(f"Erro ao processar NOTA_RESERVA {row[0]}: {e}")
-                continue
-        
-        # Retorno final após o processamento de todos os dados
-        return {"status": "sucesso", "mensagem": "Tabela TB_CREDOR_GENERICO atualizada com sucesso."}
-    
-    except Exception as e:
-        # Log de erros gerais
-        logging.error(f"Erro geral ao atualizar TB_CREDOR_GENERICO: {e}")
-        return {"status": "erro", "mensagem": f"Erro: {e}"}
 
 
 ## ÁREA DE TELAS E AÇÕES
@@ -361,7 +255,7 @@ def tela_login(ambiente_escolhido):
             # Botão confirmar
             botao_confirmar = navegador.find_element(By.XPATH, '//*[@id="loginBox:btnConfirmar"]/span')
             botao_confirmar.click()
-            tempo_espera(2)
+            tempo_espera(1)
             # Acessar a página direto para livrar as mensagens que sempre mudam no Siafe
             navegador.get(ambiente_escolhido['url_pagina_inicial'])
             return True
@@ -412,15 +306,15 @@ def selecionar_empenho_cg():
             # Input radio Credor Genérico
             input_radio_cg = navegador.find_element(By.XPATH, '//*[@id="tplSip:radTipoCredor:_2"]')
             input_radio_cg.click()
-            tempo_espera(5)
+            tempo_espera(3)
             # campo Código do Credor Genérico
             campo_cg = navegador.find_element(By.XPATH, '/html/body/div[1]/form/div[1]/div[5]/div/div[1]/div[2]/div/div/div/div[6]/div/div[1]/div[2]/div/div[6]/div/div[1]/div[3]/div/div[3]/div/div[5]/div/div[1]/div[2]/div/div[2]/div/div[1]/div/div/div/div/table/tbody/tr/td/table/tbody/tr[6]/td[2]/table/tbody/tr/td[3]/table/tbody/tr/td[1]/table/tbody/tr/td[2]/input')
             campo_cg.clear()
-            tempo_espera(5)
+            tempo_espera(2)
             campo_cg.send_keys('CG0000029')
             tempo_espera(2)
             campo_cg.send_keys(Keys.TAB)
-            tempo_espera(3)
+            tempo_espera(1)
             return True
         except Exception as e:
             logging.error(f'Tentativa {i + 1} - Erro ao tentar selecionar o código de credor generico: {e}')
@@ -443,7 +337,7 @@ def aba_classificacao(nr):
             # # Select 0 = Passivo a ser reconhecido
             # opcao_tipo_reconhecimento_de_passivo.select_by_value('0')
             # select_tipo_reconhecimento_de_passivo.send_keys(Keys.TAB)
-            tempo_espera(5)
+            tempo_espera(2)
             # Campo NR
             campo_nr = navegador.find_element(By.XPATH, '//*[@id="tplSip:lovNotaReserva:itxLovDec::content"]')
             campo_nr.send_keys(Keys.CONTROL + 'a')
@@ -587,7 +481,7 @@ def aba_produtos(tipo_tratamento, valor):
             campo_descricao = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxDescricaoProdutoGenerico::content"]')
             campo_descricao.send_keys(Keys.CONTROL + 'a')
             tempo_espera(1)
-            campo_descricao.send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024') # ALTERAR! AÇÃO
+            campo_descricao.send_keys(f'REFERENTE A ESTIMATIVA DE PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024') # ALTERAR! AÇÃO
             tempo_espera(1)
             #Campo Unidade de Fornecimento
             campo_unidade_fornecimento = navegador.find_element(By.XPATH, '//*[@id="tplSip:itxUnidadeFornecimentoProdutoGenerico::content"]')
@@ -652,9 +546,9 @@ def aba_observacao(tipo_tratamento):
             botao_aba_observacao.click()
             tempo_espera(2)
             # Campo Observação
-            print(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024')
+            print(f'REFERENTE A ESTIMATIVA DE PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024')
             campo_observacao = navegador.find_element(By.XPATH, '//*[@id="tplSip:painelObservacao:itxObservacao::content"]')
-            campo_observacao.send_keys(f'REFERENTE AO PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024') # ALTERAR! AÇÃO
+            campo_observacao.send_keys(f'REFERENTE A ESTIMATIVA DE PAGAMENTO DE {tipo_tratamento} RELATIVO A 2024') # ALTERAR! AÇÃO
             tempo_espera(2)
             return True
         except Exception as e:
@@ -682,6 +576,66 @@ def salvar_rascunho_empenho_cg(ambiente_escolhido):
             if i == 2:
                 reinciar_navegador(ambiente_escolhido)
                 return False
+            
+# ÁREA DE UPDATE NA TABELA TB_CREDOR_GENERICO
+def atualizar_tabela_credor_generico(resultados):
+    """
+    Atualiza a tabela TB_CREDOR_GENERICO com as informações de NOTA_RESERVA e VALOR.
+    Os dados são obtidos diretamente da variável `resultados` e formatados com `formatar_dados`.
+
+    Args:
+        resultados (list): Resultado do SELECT com os dados (NOTA_RESERVA, SALDO, ACAO).
+    
+    Returns:
+        dict: Resultado do processamento com status e mensagens.
+    """
+    try:
+        if not resultados:
+            return {"status": "sucesso", "mensagem": "Nenhuma atualização necessária. Nenhum dado a processar."}
+
+        # Query de inserção/atualização
+        query_update = """
+        MERGE INTO ASSIST.TB_CREDOR_GENERICO c
+        USING (SELECT :nota_reserva AS NOTA_RESERVA, :valor AS VALOR FROM DUAL) src
+        ON (c.NOTA_RESERVA = src.NOTA_RESERVA)
+        WHEN MATCHED THEN
+            UPDATE SET VALOR = src.VALOR
+        WHEN NOT MATCHED THEN
+            INSERT (NOTA_RESERVA, VALOR)
+            VALUES (src.NOTA_RESERVA, src.VALOR)
+        """
+        
+        # Iterar pelos resultados e processar cada registro
+        for row in resultados:
+            try:
+                # Formatar dados usando a função `formatar_dados`
+                nr, valor, tipo_tratamento = formatar_dados(row[0], row[1], row[2])
+                
+                # Garantir que o valor seja um número float para o banco de dados
+                valor_bd = float(valor.replace(',', '.'))
+                
+                # Executar a query para atualizar/inserir no banco
+                sucesso = conexao_bd_oracle(
+                    ambiente_escolhido, 
+                    query_update, 
+                    params={"nota_reserva": nr, "valor": valor_bd}, 
+                    is_update=True
+                )
+                if not sucesso:
+                    logging.error(f"Erro ao atualizar/inserir NOTA_RESERVA {nr}")
+            except Exception as e:
+                logging.error(f"Erro ao processar NOTA_RESERVA {row[0]}: {e}")
+                logging.error(traceback.format_exc())
+                continue
+        
+        # Retorno final após o processamento de todos os dados
+        return {"status": "sucesso", "mensagem": "Tabela TB_CREDOR_GENERICO atualizada com sucesso."}
+    
+    except Exception as e:
+        # Log de erros gerais
+        logging.error(f"Erro geral ao atualizar TB_CREDOR_GENERICO: {e}")
+        logging.error(traceback.format_exc())
+        return {"status": "erro", "mensagem": f"Erro: {e}"}
 
 # #######################
 # ## Módulo Processamento
@@ -735,8 +689,8 @@ def processar_e_atualizar_empenho(credor_generico_falhados):
 
                 # Tentar inserir Empenho
                 if inserir_empenho_cg(valor, tipo_tratamento, nr):
-                    # Se a inserção for bem-sucedida, então atualizar TT_SPU
-                    atualizar_tabela_credor_generico(resultados)
+                    # Se a inserção for bem-sucedida, então atualizar TB_CREDOR_GENERICO
+                    atualizar_tabela_credor_generico([[nr, valor, tipo_tratamento]])
                     break  # Sai do loop se a operação for bem-sucedida
             except Exception as e:
                 logging.error(f'Erro ao reprocessar o Empenho para a NR {nr_falhada}: {e}')
@@ -785,7 +739,7 @@ if resultados:
                         credor_generico_falhados.append(nr)
                     else:
                         # Se for bem-sucedido, atualizar a tabela TB_CREDOR_GENERICO
-                        atualizar_tabela_credor_generico(resultados)  # Chama a nova função de atualização
+                        atualizar_tabela_credor_generico([[nr, valor, tipo_tratamento]])  # Chama a nova função de atualização
                         sucesso = True  # Marca o sucesso
             except Exception as e:
                 # Aumenta a tentativa e loga o erro

@@ -3,13 +3,15 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
 from dotenv import dotenv_values
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
+from selenium.common.exceptions import NoSuchElementException
 
-# from IPython.display import display
+
 
 # import pandas as pd
 
@@ -137,7 +139,30 @@ INNER JOIN
     TT_SPU ts ON tps.NU_ORDEM = ts.W_NUM_PROTOCOLO
 WHERE 
     tps.NU_ORDEM IN (
-        2211180919, 2212084778
+        2306430793, 2400000028, 2306709186, 2307169223, 2305220035,
+        2306998552, 2305785083, 2306720228, 2306469401, 2306709208,
+        2307269783, 2306469606, 2307177218, 2305599913, 2305665495,
+        2306045326, 2306179683, 2306007700, 2307317176, 2306709100,
+        2306914340, 2306859536, 2306393740, 2306312405, 2306326244,
+        2307151782, 2306355376, 2307228513, 2306007742, 2306709097,
+        2306312413, 2306128540, 2307228580, 2306326201, 2306355414,
+        2400003262, 2303047689, 2307316919, 2302257663, 2307228718,
+        2307253313, 2305557650, 2305744140, 2307228734, 2302257655,
+        2305140350, 2302839786, 2307317168, 2307316927, 2307228688,
+        2305622222, 2306338056, 2307228750, 2307201267, 2307316935,
+        2400005762, 2306393456, 2306367536, 2307201259, 2306107550,
+        2305385301, 2307228769, 2306367595, 2307228807, 2306367552,
+        2307228742, 2307228793, 2305672297, 2306533320, 2305665436,
+        2305665533, 2306355490, 2306367579, 2305477729, 2306383558,
+        2306355546, 2306345370, 2306093169, 2305875112, 2306998757,
+        2305919098, 2306378104, 2306349295, 2306338013, 2305477710,
+        2306393685, 2306345095, 2306393707, 2306393561, 2307201291,
+        2307228831, 2307228840, 2305744107, 2307228858, 2307238039,
+        2306378414, 2306007653, 2307238160, 2306166476, 2305755478,
+        2305708712, 2307316951, 2307317095, 2305785067, 2307317109,
+        2306007637, 2307289369, 2307201364, 2307238357, 2306355570,
+        2306349120, 2306378260, 2307228785, 2307309203, 2307289270,
+        2307253127, 2307228777, 2306383698, 2307289326, 2306383655
     )
     AND ts.W_QTD1 IS NULL 
 ORDER BY VL_PAGAMENTO DESC
@@ -229,9 +254,12 @@ def formatar_processo(NU_ORDEM, DT_PRODUCAO, NU_CGC_CPF, VL_PAGAMENTO):
 ## ÁREA DE TELAS E AÇÕES
 
 servico = Service(ChromeDriverManager().install())
+
 navegador = webdriver.Chrome(service = servico)
 navegador.get(ambiente_escolhido['url_siafe'])
 navegador.maximize_window()
+
+# Função para esperar um tempo
 
 def tempo_espera(tempo):
     time.sleep(tempo)
